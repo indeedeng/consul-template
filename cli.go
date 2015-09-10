@@ -65,6 +65,8 @@ func (cli *CLI) Run(args []string) int {
 	}
 
 	// Setup the config and logging
+	// Store the command line config
+	original_config := config
 	config, err = cli.setup(config)
 	if err != nil {
 		return cli.handleError(err, ExitCodeConfigError)
@@ -115,7 +117,7 @@ func (cli *CLI) Run(args []string) int {
 				runner.Stop()
 
 				// Load the new configuration from disk
-				config, err = cli.setup(config)
+				config, err = cli.setup(original_config)
 				if err != nil {
 					return cli.handleError(err, ExitCodeConfigError)
 				}
